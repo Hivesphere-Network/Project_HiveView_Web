@@ -19,7 +19,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ vars.DOCKER_NAMESPACE }}/hivevaultservice
+          images: ${{ vars.DOCKER_NAMESPACE }}/hiveview_web
           tags: |
             type=schedule
             type=ref,event=branch
