@@ -1,0 +1,28 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.4"
+services:
+  project_hiveview_web:
+    build:
+      context: "D:\\Projects\\Personal_Projects\\1_Ongoing\\ProjectHiveSphere\\Project_HiveView\\\
+        Project_HiveView_Web"
+      dockerfile: "Project_HiveView_Web/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net7.0/Project_HiveView_Web.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net7.0/Project_HiveView_Web.staticwebassets.runtime.CT.json"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      NUGET_PACKAGES: "C:\\Users\\pramu\\.nuget\\packages"
+      NUGET_FALLBACK_PACKAGES: "C:\\Users\\pramu\\.nuget\\packages"
+    image: "projecthiveviewweb:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\pramu\\.nuget\\packages:/root/.nuget/fallbackpackages"
+    - "D:\\Projects\\Personal_Projects\\1_Ongoing\\ProjectHiveSphere\\Project_HiveView\\\
+      Project_HiveView_Web\\Project_HiveView_Web:/app:rw"
+    - "D:\\Projects\\Personal_Projects\\1_Ongoing\\ProjectHiveSphere\\Project_HiveView\\\
+      Project_HiveView_Web:/src:rw"
+    working_dir: "/app"

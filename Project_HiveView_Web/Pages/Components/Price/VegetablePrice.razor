@@ -1,0 +1,55 @@
+﻿@using BlazorBootstrap
+@using Project_HiveView_Web.Data
+<LineChart @ref="chartPrice" Width="800" Class="mb-4"/>
+
+@code {
+    private LineChartOptions lineChartOptions = default!;
+    private List<WeeklyPriceDM> weeklyPrices = default!;
+    
+    private LineChart chartPrice = default!;
+    private ChartData chartTemperatureData = default!;
+
+    PriceService priceService = new();
+    
+    private List<string> labels = new();
+
+    protected override void OnInitialized()
+    {
+        weeklyPrices = priceService.WeeklyPriceList;
+        labels = priceService.Labels;
+        chartTemperatureData = new ChartData { Labels = labels, Datasets = GetPriceDatasets() };
+        lineChartOptions = new() { Responsive = true, Interaction = new Interaction { Mode = InteractionMode.Index } };
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await chartPrice.InitializeAsync(chartTemperatureData, lineChartOptions);
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+    
+    
+    private List<IChartDataset> GetPriceDatasets()
+    {
+        var datasets = new List<IChartDataset>();
+        var data = weeklyPrices.Select(x => x.Price != null ? x.Price : 0).ToList();
+        var color = ColorBuilder.CategoricalTwelveColors[5].ToColor();
+        var product = weeklyPrices[0].ProductName;
+        var dataset = new LineChartDataset
+        {
+            Label = $"Weekly Price {product}",
+            Data = data,
+            BackgroundColor = new List<string> { color.ToRgbString() },
+            BorderColor = new List<string> { color.ToRgbString() },
+            BorderWidth = new List<double> { 2 },
+            HoverBorderWidth = new List<double> { 4 },
+            PointBackgroundColor = new List<string> { color.ToRgbString() },
+            PointRadius = new List<int> { 0 }, // hide points
+            PointHoverRadius = new List<int> { 4 }
+        };
+        datasets.Add(dataset);
+        return datasets;
+    }
+}
