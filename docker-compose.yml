@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  project_hiveview_web:
+    image: ${DOCKER_REGISTRY-}projecthiveviewweb
+    build:
+      context: .
+      dockerfile: Project_HiveView_Web/Dockerfile
