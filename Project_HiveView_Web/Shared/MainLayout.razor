@@ -1,29 +1,39 @@
 ﻿@inherits LayoutComponentBase
-
-<PageTitle>Project_HiveView_Web</PageTitle>
-
 <div class="page">
     <div class="sidebar">
-        <NavMenu />
+        <NavMenu/>
     </div>
 
+<<<<<<< Updated upstream
+    <div class="page" style="background-color: #0c63e4">
+=======
     <main>
         <div class="top-row px-4">
              <AuthorizeView>
                  <Authorized>
-                     <form method="get" action="logout">
-                         <button type="submit" class="nav-link btn btn-link">Log out</button>
-                     </form>
+                     <a href="logout">
+                          <button class="reg">
+                              Logout
+                          </button>
+                      </a>
                  </Authorized>
                  <NotAuthorized>
-                     <a href="login?redirectUri=/">Log in</a>
+                     <a href="login?redirectUri=/Profile">
+                         <button class="log">
+                             Login
+                         </button>
+                     </a>
                  </NotAuthorized>
              </AuthorizeView>
-             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
          </div> 
+>>>>>>> Stashed changes
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+        @Body
+
+        <div class="footer">
+            <footer>
+                <p>&copy; 2023 HiveSphere Network</p>
+            </footer>
+        </div>
+    </div>
 </div>

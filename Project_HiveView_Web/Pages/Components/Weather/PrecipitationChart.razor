@@ -1,0 +1,88 @@
+﻿@using BlazorBootstrap
+@using MongoDB.Bson
+@using Project_HiveView_Web.Data
+@using System.Reflection
+<LineChart @ref="chartTemperature" Width="800" Class="mb-4"/>
+
+@code {
+    private LineChartOptions lineChartOptions = default!;
+    private List<WeatherData> weatherData = default!;
+    
+    private LineChart chartTemperature = default!;
+    private ChartData chartTemperatureData = default!;
+
+    private List<string> labels = new();
+    WeatherService weatherService = new();
+
+    protected override void OnInitialized()
+    {
+        weatherData = weatherService.WeatherDataList;
+        LoadLabels();
+        chartTemperatureData = new ChartData { Labels = labels, Datasets = GetTemperatureDatasets() };
+        lineChartOptions = new() { Responsive = true, Interaction = new Interaction { Mode = InteractionMode.Index } };
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await chartTemperature.InitializeAsync(chartTemperatureData, lineChartOptions);
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+    
+    private void LoadLabels()
+    {
+        foreach (var data in weatherData)
+        {
+            labels.Add(data.Date);
+        }
+    }
+
+    private List<IChartDataset> GetTemperatureDatasets()
+    {
+        List<Precipitation> temperatureData = new List<Precipitation>();
+        Type type = typeof(Precipitation);
+        PropertyInfo[] properties = type.GetProperties();
+        List<string> propertyNames = new List<string>();
+
+        foreach (PropertyInfo property in properties)
+        {
+            propertyNames.Add(property.Name);
+        }
+        
+        foreach (var data in weatherData)
+        {
+            temperatureData.Add(data.Precipitation);
+        }
+        var datasets = new List<IChartDataset>(propertyNames.Count);
+        for (var index = 0; index < propertyNames.Count; index++)
+        {
+            datasets.Add(GetSubTemps(temperatureData, propertyNames[index], index));
+        }
+        return datasets;
+    }
+
+    private LineChartDataset GetSubTemps(List<Precipitation> list, string index, int colorIndex)
+    {
+        var color = ColorBuilder.CategoricalTwelveColors[colorIndex].ToColor();
+        var data = new List<double>();
+        foreach (var prec in list)
+        {
+            data.Add(prec.Total);
+        }
+        return new LineChartDataset
+        {
+            Label = $"Precipitation {index}",
+            Data = data,
+            BackgroundColor = new List<string> { color.ToRgbString() },
+            BorderColor = new List<string> { color.ToRgbString() },
+            BorderWidth = new List<double> { 2 },
+            HoverBorderWidth = new List<double> { 4 },
+            PointBackgroundColor = new List<string> { color.ToRgbString() },
+            PointRadius = new List<int> { 0 }, // hide points
+            PointHoverRadius = new List<int> { 4 }
+        };
+    }
+
+}
