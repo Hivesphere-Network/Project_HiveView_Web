@@ -1,0 +1,41 @@
+﻿@page "/Profile"
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
+<AuthorizeView>
+    <h3>Profile</h3>
+
+    <div>
+        <h1>User Profile</h1>
+        <div>
+            <h2>@context.User.Identity.Name</h2>
+            <p>Email: @Email</p>
+        </div>
+    </div>
+
+
+@code {
+    private string UserName;
+    private string Email;
+    
+    private IEnumerable<Claim> claims = Enumerable.Empty<Claim>();
+    // In the OnInitialized lifecycle method, retrieve data from user claims
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await GetClaimsPrincipalData();
+        UserName = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value!;
+        Email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value!;
+    }
+    
+    private async Task GetClaimsPrincipalData()
+    {
+        var authState = await AuthenticationStateProvider
+            .GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is not null && user.Identity.IsAuthenticated) claims = user.Claims;
+        else claims = Enumerable.Empty<Claim>();
+    }
+}
+
+</AuthorizeView>

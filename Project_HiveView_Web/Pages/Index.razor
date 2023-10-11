@@ -1,11 +1,24 @@
-﻿@page "/"
-<AuthorizeView>
-    <Authorized>
-        <h1>Hello, @context.User.Claims.FirstOrDefault(claim => claim.Type == "given_name").Value!</h1>
-  
-        <p>Welcome to your new app.</p>
-    </Authorized>
-    <NotAuthorized>
-        <p>Not Authorized</p>
-    </NotAuthorized>
-</AuthorizeView>
+@page "/"
+<body>
+    <header>
+        <h1>Welcome to the HiveSphere Network</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>About Us</h2>
+            <p>Welcome to the HiveSphere Network, where collective intelligence meets innovation. We are dedicated to transforming the way organizations collaborate and make decisions in the digital age.</p>
+        </section>
+
+        <section>
+            <h2>Our Services</h2>
+            <p>Explore our services and discover how we can empower your organization through data-driven solutions, AI, and more.</p>
+            <ul>
+                <li>Machine Learning Models</li>
+                <li>Decision Support Systems</li>
+                <li>Data Integration</li>
+                <li>Collaborative Tools</li>
+            </ul>
+        </section>
+    </main>
+</body>

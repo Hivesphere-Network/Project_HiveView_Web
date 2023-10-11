@@ -7,8 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.3.1" />
+    <PackageReference Include="Auth0.ManagementApi" Version="7.22.3" />
+    <PackageReference Include="Blazor.Bootstrap" Version="1.10.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.10" />
+<<<<<<< Updated upstream
+    <PackageReference Include="Microsoft.JSInterop" Version="7.0.10" />
+=======
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
+    <PackageReference Include="MongoDB.Driver" Version="2.21.0" />
+
+>>>>>>> Stashed changes
   </ItemGroup>
 
+
+
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 </Project>
